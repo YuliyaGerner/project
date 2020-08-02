@@ -3,11 +3,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
+from rest_framework import viewsets
+from rest_framework import permissions
+
 from .models import *
 from .forms import *
+from .serializers import *
 
 
 # Create your views here.
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes= [permissions.IsAuthenticated]
 
 
 @login_required(login_url='signin')
